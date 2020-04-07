@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fight Covid-19</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/f38c57f985.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="mainWrapper flex-centered">
+		<div class="content flex-centered">
+			<center><i class="fas fa-biohazard"></i></center>
+			<h2>Covid-19 Alert! Are You Ready?<h2>
+
+			<button class="btn-yellow">Battle Against Covid-19</button>
+		</div>
+
+		<div class="score">
+			Your Score : <span id="score">0</span>
+		</div>
+		<div class="hint"><i class="fas fa-exclamation-triangle"></i> hint : Kill all the virus with Your immune mouse</div>
+		<!-- <img src="corona.png" height="100px"> -->
+	</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.js" crossorigin="anonymous"></script>
+<script>
+	var score = 0
+	$('.score, .hint').hide()
+	$('.btn-yellow').click(function(){
+		$('.content').fadeOut(100);
+		$('.score, .hint').fadeIn(600);
+		$('.mainWrapper').removeClass('flex-centered');
+		setInterval(addVirus, 1000);
+		setInterval(iterateVirus, 3000);
+	})
+	function addVirus(){
+		console.log("hellp");
+		var top= Math.floor((Math.random() * 100) + 1);
+		var height = Math.floor(Math.random() * 101) + 50
+		var img = `<img src ='corona.png' height = '${height}' style='top : ${top}vh; left : -${height}px' class="corona">`
+		$('.mainWrapper').append(img);
+	}
+
+	function makeNewPosition(){
+	    var h = $(window).height() - 50;
+	    var w = $(window).width() - 50;
+	    
+	    var nh = Math.floor(Math.random() * h);
+	    var nw = Math.floor(Math.random() * w);
+	    
+	    return [nh,nw];    
+	    
+	}
+
+	function animateDiv(el){
+	    var newq = makeNewPosition();
+	    $(el).animate({ top: newq[0], left: newq[1] });
+	};
+	function iterateVirus()
+	{
+		$('.mainWrapper .corona').each(function() {
+			animateDiv($(this));
+		});
+	}
+
+	$('body').on("click", ".corona", function(){
+		score = score + 1;
+		$('#score').empty().append(score);
+		$(this).remove();
+	})
+</script>
+</html>
